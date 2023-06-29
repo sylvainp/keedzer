@@ -11,17 +11,31 @@ import KDOfflineNavigator from './src/presentation/navigation/KDOfflineNavigator
 import getConfigContextValue from './src/context/getConfigurationContextValue';
 import {ConfigContext} from './src/context/ConfigurationContext';
 import {LogBox} from 'react-native';
+import {Provider} from 'react-redux';
+import KDOnlineNavigator from './src/presentation/navigation/KDOnlineNavigator';
+import {accessToken} from './src/store/slice';
+import {store} from './src/store/store';
+import {useAppSelector} from './src/store/hooks';
 
-function App(): JSX.Element {
+const AppNavigationContainer = () => {
+  const token = useAppSelector(accessToken);
+  console.log('****** ', {token});
+  return (
+    <NavigationContainer>
+      {token ? <KDOnlineNavigator /> : <KDOfflineNavigator />}
+    </NavigationContainer>
+  );
+};
+const App: React.FC = (): JSX.Element => {
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
+
   return (
-    <ConfigContext.Provider value={getConfigContextValue()}>
-      <NavigationContainer>
-        <KDOfflineNavigator />
-      </NavigationContainer>
-    </ConfigContext.Provider>
+    <Provider store={store}>
+      <ConfigContext.Provider value={getConfigContextValue()} />
+      <AppNavigationContainer />
+    </Provider>
   );
-}
+};
 export default App;

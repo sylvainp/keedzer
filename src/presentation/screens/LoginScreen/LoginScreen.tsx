@@ -4,6 +4,9 @@ import {MusicSVG} from '../../../assets/icons';
 import KDLoginDeezerButton from '../../components/KDLoginDeezerButton';
 import KDLoginDeezerView from '../../components/KDLoginDeezerView';
 import DI from '../../../context/DI';
+import {useDispatch} from 'react-redux';
+import {setToken} from '../../../store/slice';
+import {useAppDispatch} from '../../../store/hooks';
 
 const styles = StyleSheet.create({
   root: {backgroundColor: '#121216'},
@@ -26,6 +29,11 @@ const styles = StyleSheet.create({
 });
 
 const LoginScreen = () => {
+  const dispatch = useAppDispatch();
+  const saveAccessToken = (accessToken: string) => {
+    console.log('saveAccessToken', {accessToken});
+    dispatch(setToken(accessToken));
+  };
   const [isLogging, setIsLogging] = useState(false);
   const [isError, setError] = useState<string | null>(null);
   return (
@@ -48,7 +56,7 @@ const LoginScreen = () => {
         onDissmiss={(accessToken?: string) => {
           setIsLogging(false);
           if (accessToken) {
-            console.log({accessToken});
+            saveAccessToken(accessToken);
           } else {
             setError("Impossible de s'authentifier");
           }
