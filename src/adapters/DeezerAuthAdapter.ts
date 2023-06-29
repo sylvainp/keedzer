@@ -22,7 +22,6 @@ class DeezerAuthAdapter implements AuthenticationPort {
 
       const response = await fetch(request);
       if (response.status === 200) {
-        const repsonseText = await response.text();
         const responseJson = await response.json();
         console.log({responseJson});
         return Promise.resolve({accessToken: 'plop'});

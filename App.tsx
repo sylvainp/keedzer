@@ -21,9 +21,11 @@ const AppNavigationContainer = () => {
   const token = useAppSelector(accessToken);
   console.log('****** ', {token});
   return (
-    <NavigationContainer>
-      {token ? <KDOnlineNavigator /> : <KDOfflineNavigator />}
-    </NavigationContainer>
+    <ConfigContext.Provider value={getConfigContextValue(token)}>
+      <NavigationContainer>
+        {token ? <KDOnlineNavigator /> : <KDOfflineNavigator />}
+      </NavigationContainer>
+    </ConfigContext.Provider>
   );
 };
 const App: React.FC = (): JSX.Element => {
@@ -33,7 +35,6 @@ const App: React.FC = (): JSX.Element => {
 
   return (
     <Provider store={store}>
-      <ConfigContext.Provider value={getConfigContextValue()} />
       <AppNavigationContainer />
     </Provider>
   );

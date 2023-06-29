@@ -1,3 +1,5 @@
+import GetUserInfoUsecase from '../domain/usecases/GetUserInfoUsecase';
+
 export interface ConfigContextValueType {
-  // loginViewmodel: LoginViewmodel;
+  getUserInfoUsecase: GetUserInfoUsecase;
 }
