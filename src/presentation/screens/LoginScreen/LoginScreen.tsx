@@ -1,9 +1,10 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {MusicSVG} from '../../../assets/icons';
 import KDLoginDeezerButton from '../../components/KDLoginDeezerButton';
-import {useConfig} from '../../../context/ConfigurationContext';
 import KDLoginDeezerView from '../../components/KDLoginDeezerView';
+import DI from '../../../context/DI';
+
 const styles = StyleSheet.create({
   root: {backgroundColor: '#121216'},
   titleContainer: {height: '50%'},
@@ -25,7 +26,8 @@ const styles = StyleSheet.create({
 });
 
 const LoginScreen = () => {
-  const {loginViewmodel} = useConfig();
+  const [isLogging, setIsLogging] = useState(false);
+  const [isError, setError] = useState<string | null>(null);
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle={'light-content'} />
@@ -36,19 +38,19 @@ const LoginScreen = () => {
       <View style={styles.container}>
         <KDLoginDeezerButton
           onPress={() => {
-            loginViewmodel.startLoggingProcess();
-            // setIsLogging(true);
+            setIsLogging(true);
           }}
-          enabled={!loginViewmodel.state.isLogging}
+          enabled={!isLogging}
         />
       </View>
       <KDLoginDeezerView
-        isVisible={loginViewmodel.state.isLogging}
+        isVisible={isLogging}
         onDissmiss={(accessToken?: string) => {
+          setIsLogging(false);
           if (accessToken) {
-            loginViewmodel.onUserLogged(accessToken);
+            console.log({accessToken});
           } else {
-            loginViewmodel.onLoggingError("Impossible de s'authentifier");
+            setError("Impossible de s'authentifier");
           }
         }}
       />
