@@ -1,4 +1,4 @@
-import UserEntity from '../../../src/domain/entities/UserEntity';
+import UserEntity from '../../../src/domain/entities/User.entity';
 
 describe('UserEntity', () => {
   it('userEntity getter are ok ', () => {

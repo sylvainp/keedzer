@@ -1,3 +1,4 @@
 import MusicSVG from './music.svg';
 import LogoDeezerSVG from './logo_deezer.svg';
-export {MusicSVG, LogoDeezerSVG};
+import PlayButtonSVG from './play-button.svg';
+export {MusicSVG, LogoDeezerSVG, PlayButtonSVG};

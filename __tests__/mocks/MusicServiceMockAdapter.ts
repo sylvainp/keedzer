@@ -1,4 +1,4 @@
-import UserEntity from '../../src/domain/entities/UserEntity';
+import UserEntity from '../../src/domain/entities/User.entity';
 import MusicServicePort from '../../src/domain/ports/MusicServicePort';
 
 export default class MusicServiceMockAdapter implements MusicServicePort {

@@ -11,7 +11,6 @@ class DeezerAuthAdapter implements AuthenticationPort {
     }&app_id=${DEEZER_APP_ID}&redirect_uri=${encodeURIComponent(
       DEEZER_REDIRECT_URL,
     )}`;
-    console.log({authUrl});
     try {
       const request = new Request(authUrl, {
         headers: {
@@ -23,7 +22,6 @@ class DeezerAuthAdapter implements AuthenticationPort {
       const response = await fetch(request);
       if (response.status === 200) {
         const responseJson = await response.json();
-        console.log({responseJson});
         return Promise.resolve({accessToken: 'plop'});
       } else {
         return Promise.resolve({accessToken: 'plip'});

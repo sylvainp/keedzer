@@ -1,7 +1,7 @@
 import MusicServicePort from '../../../src/domain/ports/MusicServicePort';
 import GetUserInfoUsecase from '../../../src/domain/usecases/GetUserInfoUsecase';
 import MusicServiceMockAdapter from '../../mocks/MusicServiceMockAdapter';
-import UserEntity from '../../../src/domain/entities/UserEntity';
+import UserEntity from '../../../src/domain/entities/User.entity';
 
 describe('GetUserInfoUsecase', () => {
   const mockUserEntity = new UserEntity(

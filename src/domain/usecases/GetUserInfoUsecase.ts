@@ -1,4 +1,4 @@
-import UserEntity from '../entities/UserEntity';
+import UserEntity from '../entities/User.entity';
 import MusicServicePort from '../ports/MusicServicePort';
 
 export default class GetUserInfoUsecase {

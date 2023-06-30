@@ -1,7 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
-import accessTokenReducer from './slice';
+import accessTokenReducer from './accessTokenSlice';
+import userReducer from './userSlice';
 export const store = configureStore({
-  reducer: {accessToken: accessTokenReducer},
+  reducer: {accessToken: accessTokenReducer, user: userReducer},
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
