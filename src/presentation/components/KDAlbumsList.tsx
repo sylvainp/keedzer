@@ -11,6 +11,7 @@ export interface KDAlbumsListProps {
   isLoading: boolean;
   isLoadingMore: boolean;
   onLoadMore: () => void;
+  onAlbumPressed: (album: AlbumEntity, autoPlay: boolean) => void;
 }
 
 const styles = StyleSheet.create({
@@ -35,6 +36,7 @@ const KDAlbumsList: React.FC<KDAlbumsListProps> = ({
   isLoading,
   isLoadingMore,
   onLoadMore,
+  onAlbumPressed,
 }) => {
   const handleLoadMore = () => {
     if (!isLoading && !isLoadingMore && canLoadMore) {
@@ -53,13 +55,11 @@ const KDAlbumsList: React.FC<KDAlbumsListProps> = ({
         <KDAlbumCard
           album={item}
           dimension={cardDimension}
-          onAlbumPress={(album: AlbumEntity, autoPlay: boolean) => {
-            console.log(`open ${album.title} autoplay=${autoPlay}`);
-          }}
+          onAlbumPress={onAlbumPressed}
         />
       )}
       onEndReachedThreshold={0.4}
-      onEndReached={info => {
+      onEndReached={_info => {
         handleLoadMore();
       }}
     />

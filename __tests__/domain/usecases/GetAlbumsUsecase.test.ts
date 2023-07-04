@@ -33,6 +33,7 @@ describe('GetAlbumsUsecase', () => {
           'coverMedium',
           'coverLarge',
           'title',
+          'trackUrl',
         ),
       ],
       hasNext: false,

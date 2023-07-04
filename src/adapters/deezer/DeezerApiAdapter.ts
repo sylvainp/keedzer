@@ -1,12 +1,16 @@
 import AlbumEntity from '../../domain/entities/Album.entity';
-import ArtistEntity from '../../domain/entities/Artist.entity';
+import TrackEntity from '../../domain/entities/Track.entity';
 import UserEntity from '../../domain/entities/User.entity';
 import MusicServicePort from '../../domain/ports/MusicServicePort';
 import DeezerResponseAlbumModel from './models/DeezerResponseAlbum.model';
+import DeezerTrackModel from './models/DeezerTrack.model';
 import DeezerUserModel from './models/DeezerUser.model';
+import deezerAlbumModelToDomain from './models/deezerAlbumModelToDomain';
+import deezerTrackModelToDomain from './models/deezerTrackModelToDomain';
+import deezerUserModelToDomain from './models/deezerUserModelToDomain';
 
 export default class DeezerApiAdapter implements MusicServicePort {
-  private readonly baseUrl: string = 'https://api.deezer.com/user';
+  private readonly baseUrl: string = 'https://api.deezer.com/';
   private _accessToken: string | null = null;
   private _userId: string | null = null;
 
@@ -32,18 +36,13 @@ export default class DeezerApiAdapter implements MusicServicePort {
     if (!this._accessToken) {
       throw new Error('Access token required !');
     }
-    const url = `${this.baseUrl}/me?access_token=${this._accessToken}`;
+    const url = `${this.baseUrl}/user/me?access_token=${this._accessToken}`;
     const request = this.buildRequest(url);
 
     const response = await fetch(request);
     if (response.status === 200) {
       const responseJson: DeezerUserModel = await response.json();
-      return new UserEntity(
-        `${responseJson.id}`,
-        responseJson.lastname ?? 'N/C',
-        responseJson.firstname ?? 'N/C',
-        responseJson.picture_small ?? 'N/C',
-      );
+      return deezerUserModelToDomain(responseJson);
     } else {
       throw {code: response.status, message: response.statusText};
     }
@@ -59,7 +58,7 @@ export default class DeezerApiAdapter implements MusicServicePort {
       throw new Error('User id required');
     }
 
-    const url = `${this.baseUrl}/${this._userId}/albums?access_token=${
+    const url = `${this.baseUrl}/user/${this._userId}/albums?access_token=${
       this._accessToken
     }&index=${page * this.record_per_page}&limit=${this.record_per_page}`;
     const request = this.buildRequest(url);
@@ -69,22 +68,24 @@ export default class DeezerApiAdapter implements MusicServicePort {
 
       return {
         hasNext: responseJson.next !== undefined,
-        data: responseJson.data.map(
-          item =>
-            new AlbumEntity(
-              `${item.id}`,
-              new ArtistEntity(`${item.artist.id}`, item.artist.name),
-              item.cover_medium,
-              item.cover_big,
-              item.title,
-            ),
-        ),
+        data: responseJson.data.map(item => deezerAlbumModelToDomain(item)),
       };
     } else {
       throw {code: response.status, message: response.statusText};
     }
   }
-  getAlbum(albumId: string): Promise<any> {
-    throw new Error('Method not implemented.');
+  async getAlbumTracks(albumId: string): Promise<TrackEntity[]> {
+    if (!this._accessToken) {
+      throw new Error('Access token required !');
+    }
+    const url = `${this.baseUrl}/album/${albumId}/tracks?access_token=${this._accessToken}`;
+    const request = this.buildRequest(url);
+    const response = await fetch(request);
+    if (response.status === 200) {
+      const responseJson: {data: DeezerTrackModel[]} = await response.json();
+      return responseJson.data.map(item => deezerTrackModelToDomain(item));
+    } else {
+      throw {code: response.status, message: response.statusText};
+    }
   }
 }

@@ -1,4 +1,5 @@
 import DeezerApiAdapter from '../adapters/deezer/DeezerApiAdapter';
+import GetAlbumsTracks from '../domain/usecases/GetAlbumsTracks';
 import GetAlbumsUsecase from '../domain/usecases/GetAlbumsUsecase';
 import GetUserInfoUsecase from '../domain/usecases/GetUserInfoUsecase';
 import {ConfigContextValueType} from './configurationContextTypes';
@@ -16,7 +17,8 @@ const getConfigContextValue = (
   }
   const getUserInfoUsecase = new GetUserInfoUsecase(musicService);
   const getAlbumsUsecase = new GetAlbumsUsecase(musicService);
-  return {getUserInfoUsecase, getAlbumsUsecase};
+  const getAlbumsTracks = new GetAlbumsTracks(musicService);
+  return {getUserInfoUsecase, getAlbumsUsecase, getAlbumsTracks};
 };
 
 export default getConfigContextValue;

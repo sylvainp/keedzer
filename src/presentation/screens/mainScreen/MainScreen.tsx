@@ -9,11 +9,17 @@ import {GetAlbumsUsecaseResponse} from '../../../domain/usecases/GetAlbumsUsecas
 import {useAppDispatch} from '../../../store/hooks';
 import {setId} from '../../../store/userSlice';
 import {Text} from 'react-native-svg';
+import {NativeStackParamList} from '../../navigation/types';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   root: {flex: 1, backgroundColor: 'black'},
 });
 const MainScreen: React.FC = () => {
+  const {navigate} =
+    useNavigation<NativeStackNavigationProp<NativeStackParamList>>();
+
   const {getUserInfoUsecase, getAlbumsUsecase} = useConfig();
   const dispatch = useAppDispatch();
   const getUserInfo = async () => {
@@ -74,6 +80,9 @@ const MainScreen: React.FC = () => {
         isLoadingMore={isLoadingMore}
         onLoadMore={() => {
           loadAlbums();
+        }}
+        onAlbumPressed={(album: AlbumEntity, autoPlay: boolean) => {
+          navigate('Player', {source: album});
         }}
       />
       {isLoadingMore && <Text>Load more !</Text>}
