@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {LogoDeezerSVG} from '../../assets/icons';
+import theme from '../theme';
 
 interface KDLoginDeezerButtonProps {
   enabled: boolean;
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     borderColor: '#147DD9',
     borderWidth: 1,
     borderRadius: 8,
-    backgroundColor: '#121216',
+    backgroundColor: theme.color.backgroundColor,
     shadowColor: '#147DD9',
     shadowOffset: {width: 1, height: -1},
     shadowOpacity: 1,

@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import UserEntity from '../../domain/entities/UserEntity';
+import UserEntity from '../../domain/entities/User.entity';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#121216',
+    backgroundColor: theme.color.backgroundColor,
     height: 60,
     padding: 8,
   },

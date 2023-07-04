@@ -3,13 +3,12 @@ import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {MusicSVG} from '../../../assets/icons';
 import KDLoginDeezerButton from '../../components/KDLoginDeezerButton';
 import KDLoginDeezerView from '../../components/KDLoginDeezerView';
-import DI from '../../../context/DI';
-import {useDispatch} from 'react-redux';
-import {setToken} from '../../../store/slice';
+import {setToken} from '../../../store/accessTokenSlice';
 import {useAppDispatch} from '../../../store/hooks';
+import theme from '../../theme';
 
 const styles = StyleSheet.create({
-  root: {backgroundColor: '#121216'},
+  root: {backgroundColor: theme.color.backgroundColor},
   titleContainer: {height: '50%'},
   image: {alignSelf: 'center'},
   title: {
@@ -31,7 +30,6 @@ const styles = StyleSheet.create({
 const LoginScreen = () => {
   const dispatch = useAppDispatch();
   const saveAccessToken = (accessToken: string) => {
-    console.log('saveAccessToken', {accessToken});
     dispatch(setToken(accessToken));
   };
   const [isLogging, setIsLogging] = useState(false);
