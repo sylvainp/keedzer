@@ -12,6 +12,8 @@ import {useConfig} from '../../context/ConfigurationContext';
 import TrackEntity from '../../domain/entities/Track.entity';
 import {Image} from 'react-native-svg';
 import FastImage from 'react-native-fast-image';
+import theme from '../theme';
+import {ErrorSVG} from '../../assets/icons';
 
 interface KDAlbumsTracksListProps {
   style?: StyleProp<ViewStyle> | undefined;
@@ -19,14 +21,27 @@ interface KDAlbumsTracksListProps {
 }
 const styles = StyleSheet.create({
   container: {},
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  errorMessage: {
+    flex: 1,
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+  },
   listOverlay: {
     position: 'absolute',
     left: 16,
     right: 16,
     top: 16,
     bottom: 16,
-    backgroundColor: 'black',
-    opacity: 0.2,
+    backgroundColor: theme.color.backgroundColor,
+    opacity: 0.3,
     borderRadius: 16,
   },
 
@@ -93,10 +108,15 @@ const KDAlbumsTracksList: React.FC<KDAlbumsTracksListProps> = ({
   return (
     <View style={containerStyle}>
       <View style={styles.listOverlay} />
-      <FlatList
-        data={tracks}
-        renderItem={({item}: any) => trackRow(item)}
-      />
+      {tracks && (
+        <FlatList data={tracks} renderItem={({item}: any) => trackRow(item)} />
+      )}
+      {error && (
+        <View style={styles.errorContainer}>
+          <ErrorSVG width={200} height={200} color={'#FFF'} />
+          <Text style={styles.errorMessage}>{error.message}</Text>
+        </View>
+      )}
     </View>
   );
 };

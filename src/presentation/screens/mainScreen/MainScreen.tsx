@@ -12,9 +12,10 @@ import {Text} from 'react-native-svg';
 import {NativeStackParamList} from '../../navigation/types';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
+import theme from '../../theme';
 
 const styles = StyleSheet.create({
-  root: {flex: 1, backgroundColor: 'black'},
+  root: {flex: 1, backgroundColor: theme.color.backgroundColor},
 });
 const MainScreen: React.FC = () => {
   const {navigate} =
