@@ -1,3 +1,7 @@
+import GetAlbumsUsecase from '../domain/usecases/GetAlbumsUsecase';
+import GetUserInfoUsecase from '../domain/usecases/GetUserInfoUsecase';
+
 export interface ConfigContextValueType {
-  // loginViewmodel: LoginViewmodel;
+  getUserInfoUsecase: GetUserInfoUsecase;
+  getAlbumsUsecase: GetAlbumsUsecase;
 }
