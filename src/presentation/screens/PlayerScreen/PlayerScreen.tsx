@@ -4,12 +4,18 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {NativeStackParamList} from '../../navigation/types';
 import KDPlayerController from '../../components/KDPlayerController';
 import KDAlbumsTracksList from '../../components/KDAlbumsTracksList';
+import KDPlayerScreenTopbar from '../../components/KDPlayerScreenTopbar';
+import {useNavigation} from '@react-navigation/native';
 type PlayerScreenProps = NativeStackScreenProps<NativeStackParamList, 'Player'>;
+
+const controllerHeight = 200;
+const controllerPadding = 16;
+const topbarHeight = 60;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    flexDirection: 'column',
   },
   background: {
     width: '100%',
@@ -21,10 +27,10 @@ const styles = StyleSheet.create({
   tracksList: {padding: 24},
   controller: {
     position: 'absolute',
-    bottom: 50,
-    left: 16,
-    right: 16,
-    height: 200,
+    bottom: controllerPadding,
+    left: controllerPadding,
+    right: controllerPadding,
+    height: controllerHeight,
   },
 });
 const PlayerScreen = ({
@@ -33,7 +39,13 @@ const PlayerScreen = ({
   },
 }: PlayerScreenProps) => {
   const screenDimension = useWindowDimensions();
-  const trackListHeight = screenDimension.height - 250 - 25;
+  const navigation = useNavigation();
+  const trackListHeight =
+    screenDimension.height -
+    controllerHeight -
+    controllerPadding -
+    topbarHeight -
+    25;
   const tracksListStyle = StyleSheet.flatten([
     styles.tracksList,
     {height: trackListHeight, width: screenDimension.width},
@@ -45,6 +57,11 @@ const PlayerScreen = ({
         resizeMode="cover"
         source={{uri: source.coverLarge}}
         blurRadius={4}
+      />
+      <KDPlayerScreenTopbar
+        title={source.title}
+        height={topbarHeight}
+        onBackPressed={() => navigation.goBack()}
       />
       <KDAlbumsTracksList album={source} style={tracksListStyle} />
       <KDPlayerController

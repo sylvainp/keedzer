@@ -12,6 +12,7 @@ import {
   PlayerPauseSVG,
   PlayerPlaySVG,
 } from '../../assets/icons';
+import theme from '../theme';
 
 interface KDPlayerControllerProps {
   style: StyleProp<ViewStyle> | undefined;
@@ -30,8 +31,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   containerOverlay: {
-    backgroundColor: 'black',
-    opacity: 0.2,
+    backgroundColor: theme.color.backgroundColor,
+    opacity: 0.3,
     position: 'absolute',
     bottom: 0,
     left: 0,
