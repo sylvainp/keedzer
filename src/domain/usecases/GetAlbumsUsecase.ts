@@ -14,7 +14,6 @@ export default class GetAlbumsUsecase {
         await this.musicService.getAlbums(pageIndex);
       return {data: response.data, hasNext: response.hasNext};
     } catch (error) {
-      console.error({error});
       return new Error(
         'Une erreur est survenue lors de la récupération des albums',
       );
