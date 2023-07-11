@@ -1,4 +1,4 @@
-import TrackEntity from '../../../domain/entities/Track.entity';
+import TrackEntity from '../../../../domain/entities/Track.entity';
 import DeezerTrackModel from './DeezerTrack.model';
 
 const deezerTrackModelToDomain = (track: DeezerTrackModel): TrackEntity => {

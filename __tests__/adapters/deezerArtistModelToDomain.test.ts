@@ -1,5 +1,5 @@
-import DeezerArtistModel from '../../src/adapters/deezer/models/DeezerArtist.model';
-import deezerArtistModelToDomain from '../../src/adapters/deezer/models/deezerArtistModelToDomain';
+import DeezerArtistModel from '../../src/adapters/secondaries/deezer/models/DeezerArtist.model';
+import deezerArtistModelToDomain from '../../src/adapters/secondaries/deezer/models/deezerArtistModelToDomain';
 import ArtistEntity from '../../src/domain/entities/Artist.entity';
 
 describe('deezerArtistModelToDomain', () => {

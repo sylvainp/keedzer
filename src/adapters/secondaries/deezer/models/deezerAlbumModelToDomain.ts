@@ -1,4 +1,4 @@
-import AlbumEntity from '../../../domain/entities/Album.entity';
+import AlbumEntity from '../../../../domain/entities/Album.entity';
 import DeezerAlbumModel from './DeezerAlbum.model';
 import deezerArtistModelToDomain from './deezerArtistModelToDomain';
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import {FlatList, Text, StyleSheet, View, Dimensions} from 'react-native';
+import {FlatList, StyleSheet, Dimensions} from 'react-native';
 import AlbumEntity from '../../domain/entities/Album.entity';
-import FastImage from 'react-native-fast-image';
 import KDAlbumCard from './KDAlbumCard';
 import theme from '../theme';
 

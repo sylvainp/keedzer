@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import AlbumEntity from '../../domain/entities/Album.entity';
 import {
@@ -5,19 +6,21 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
 import {useConfig} from '../../context/ConfigurationContext';
 import TrackEntity from '../../domain/entities/Track.entity';
-import {Image} from 'react-native-svg';
 import FastImage from 'react-native-fast-image';
 import theme from '../theme';
-import {ErrorSVG} from '../../assets/icons';
+import {ErrorSVG, PlayButtonSVG} from '../../assets/icons';
 
 interface KDAlbumsTracksListProps {
   style?: StyleProp<ViewStyle> | undefined;
   album: AlbumEntity;
+  onTrackPressed: (track: TrackEntity) => void;
+  onTrackLoaded: (tracks: TrackEntity[]) => void;
 }
 const styles = StyleSheet.create({
   container: {},
@@ -51,7 +54,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 4,
   },
+  trackImageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   trackImage: {width: 48, height: 48},
+  trackPlaying: {position: 'absolute'},
   trackTitle: {
     color: 'white',
     fontSize: 24,
@@ -63,12 +71,14 @@ const styles = StyleSheet.create({
 const KDAlbumsTracksList: React.FC<KDAlbumsTracksListProps> = ({
   album,
   style,
+  onTrackPressed,
+  onTrackLoaded,
 }) => {
-  const {getAlbumsTracks} = useConfig();
-
+  const {getAlbumsTracks, playerService} = useConfig();
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [tracks, setTracks] = useState<TrackEntity[] | null>(null);
+  const [currentTrackId, setCurrentTrackId] = useState<string | null>(null);
   const loadAlbumsTracks = async () => {
     setLoading(true);
     const result: TrackEntity[] | Error = await getAlbumsTracks.execute(
@@ -80,21 +90,31 @@ const KDAlbumsTracksList: React.FC<KDAlbumsTracksListProps> = ({
     } else {
       setError(null);
       setTracks(result);
+      onTrackLoaded(result);
     }
     setLoading(false);
   };
   const trackRow = (track: TrackEntity) => {
     return (
-      <View style={styles.trackContainer}>
-        <FastImage
-          style={styles.trackImage}
-          source={{uri: album.coverSmall}}
-          resizeMode={FastImage.resizeMode.contain}
-        />
+      <TouchableOpacity
+        style={styles.trackContainer}
+        onPress={() => {
+          onTrackPressed(track);
+        }}>
+        <View style={styles.trackImageContainer}>
+          <FastImage
+            style={styles.trackImage}
+            source={{uri: album.coverSmall}}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+          {track.id === currentTrackId && (
+            <PlayButtonSVG style={styles.trackPlaying} width={20} height={20} />
+          )}
+        </View>
         <Text numberOfLines={2} style={styles.trackTitle}>
           {track.title}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
   const containerStyle = style
@@ -102,8 +122,23 @@ const KDAlbumsTracksList: React.FC<KDAlbumsTracksListProps> = ({
     : styles.container;
 
   useEffect(() => {
+    const key = 'albumlist';
+    playerService.addPlayPauseListener(key, isPlaying => {
+      if (!isPlaying) {
+        setCurrentTrackId(null);
+      }
+    });
+    playerService.addTrackChangedListener(key, trackId => {
+      setCurrentTrackId(trackId);
+    });
+    return () => {
+      playerService.removePlayPauseListener(key);
+      playerService.removeTrackChangedListener(key);
+    };
+  }, []);
+
+  useEffect(() => {
     loadAlbumsTracks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [album]);
   return (
     <View style={containerStyle}>

@@ -1,6 +1,6 @@
-import DeezerAlbumModel from '../../src/adapters/deezer/models/DeezerAlbum.model';
-import deezerAlbumModelToDomain from '../../src/adapters/deezer/models/deezerAlbumModelToDomain';
-import deezerArtistModelToDomain from '../../src/adapters/deezer/models/deezerArtistModelToDomain';
+import DeezerAlbumModel from '../../src/adapters/secondaries/deezer/models/DeezerAlbum.model';
+import deezerAlbumModelToDomain from '../../src/adapters/secondaries/deezer/models/deezerAlbumModelToDomain';
+import deezerArtistModelToDomain from '../../src/adapters/secondaries/deezer/models/deezerArtistModelToDomain';
 import AlbumEntity from '../../src/domain/entities/Album.entity';
 
 describe('deezerAlbumModelToDomain', () => {
