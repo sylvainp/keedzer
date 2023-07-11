@@ -1,4 +1,4 @@
-import UserEntity from '../../../domain/entities/User.entity';
+import UserEntity from '../../../../domain/entities/User.entity';
 import DeezerUserModel from './DeezerUser.model';
 
 const deezerUserModelToDomain = (userModel: DeezerUserModel): UserEntity => {

@@ -1,5 +1,5 @@
-import DeezerUserModel from '../../src/adapters/deezer/models/DeezerUser.model';
-import deezerUserModelToDomain from '../../src/adapters/deezer/models/deezerUserModelToDomain';
+import DeezerUserModel from '../../src/adapters/secondaries/deezer/models/DeezerUser.model';
+import deezerUserModelToDomain from '../../src/adapters/secondaries/deezer/models/deezerUserModelToDomain';
 
 describe('deezerUserModelToDomain', () => {
   it('function create entity from deezer model', () => {

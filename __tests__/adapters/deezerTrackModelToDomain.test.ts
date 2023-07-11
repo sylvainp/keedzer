@@ -1,5 +1,5 @@
-import DeezerTrackModel from '../../src/adapters/deezer/models/DeezerTrack.model';
-import deezerTrackModelToDomain from '../../src/adapters/deezer/models/deezerTrackModelToDomain';
+import DeezerTrackModel from '../../src/adapters/secondaries/deezer/models/DeezerTrack.model';
+import deezerTrackModelToDomain from '../../src/adapters/secondaries/deezer/models/deezerTrackModelToDomain';
 
 describe('deezerTrackModelToDomain', () => {
   it('create entity from model', () => {

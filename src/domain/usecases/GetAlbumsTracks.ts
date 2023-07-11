@@ -11,7 +11,6 @@ class GetAlbumsTracks {
       );
       return response;
     } catch (erreur) {
-      console.error({erreur});
       return new Error(
         'Une erreur est survenue lors de la récupération des pistes',
       );
