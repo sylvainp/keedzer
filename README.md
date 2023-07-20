@@ -17,7 +17,14 @@ L'API Deezer ne permet pas la lecture des titres dans leur intégralité, c'est 
 - et bien d'autres encore 😃
 
 
-| Écran d'authentification | Liste des albums | Player |
-|--|--|--|
-| ![login](screenshots/login.jpg) | ![liste des albums](screenshots/albums_list.jpg) | ![player](screenshots/player.jpg)
+| Écran d'authentification |
+|--|
+| ![login](screenshots/login.jpg) |
 
+| Liste des albums |
+|--|
+| ![liste des albums](screenshots/albums_list.jpg) |
+
+| Player |
+|--|
+| ![player](screenshots/player.jpg) |
